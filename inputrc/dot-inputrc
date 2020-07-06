@@ -1,0 +1,41 @@
+# See for demos: http://brettterpstra.com/quick-tip-some-inputrc-fun/ 
+
+# Option-z will go to previous directory and ls
+"\ez": 'cd -\015ls\015'
+
+# Option-x will use the last parameter in the previous command and cd into it (and ls)
+"\ex": 'cd !$\015ls\015' 
+
+# This changes TabCompletion
+TAB: menu-complete
+"\e[Z": "\e-1\C-i"
+
+
+set bind-tty-special-chars on
+
+# bash doesn’t put a / after symlinks when doing autocomplete
+set mark-symlinked-directories on
+
+set prefer-visible-bell on
+
+# Hit C-w, it just deletes up to the first / character. This makes
+# fixing thinigs a bit easier. It also works within a path.
+
+# "\C-w": unix-filename-rubout
+# "": unix-filename-rubout
+#not working for some reason
+
+# will take a bash glob — say * — and replace the glob with all the
+# files that match that glob
+
+"\C-o*": glob-expand-word
+
+########################
+# Name: Ignore Case in Bash
+# Created: Friday, December 11, 2015
+# Source: http://superuser.com/questions/90196/case-insensitive-tab-completion-in-bash
+# Description:
+# Improvements:
+# Modified:
+
+set completion-ignore-case on
