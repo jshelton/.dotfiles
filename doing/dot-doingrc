@@ -43,3 +43,6 @@ default_tags: []
 autotag:
   whitelist: []
   synonyms: {}
+html_template:
+  haml: 
+  css: 

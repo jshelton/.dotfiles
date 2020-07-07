@@ -1,31 +1,21 @@
-
-
-# Source http://getantibody.github.io/
-# Plugins for ZSH
-
-# After updating .zsh_plugins.txt do the following to save and refresh shell
-# antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh && source ~/.zsh_plugins.sh && src
-
-ZSH_ANTIBODY_TXT="$HOME/.oh-my-zsh-custom/antibody/zsh_plugins.txt"
-ZSH_ANTIBODY_SH="$HOME/.oh-my-zsh-custom/antibody/zsh_plugins.sh"
-
-source $ZSH_ANTIBODY_SH
-
-
 # If you come from bash you might have to change your $PATH.
-export PATH="/usr/local/opt/python/libexec/bin:/usr/local/sbin:$HOME/local/bin:$HOME/bin:$(brew --prefix)/lib/pythonX.Y/site-packages:$PATH"
-
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="/Users/joshua/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
- ZSH_THEME="robbyrussell"
-# ZSH_THEME="agnoster"
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="af-magic"
+ZSH_THEME="terminalparty"
+# These are minimalistic
+ZSH_THEME="arrow"
+ZSH_THEME="imajes"
 
+ZSH_THEME="agnoster"
+ZSH_THEME="robbyrussell"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
@@ -42,8 +32,14 @@ export ZSH="$HOME/.oh-my-zsh"
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS=true
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -71,7 +67,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM="$HOME/.oh-my-zsh-custom/"
+# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -80,57 +77,12 @@ ZSH_CUSTOM="$HOME/.oh-my-zsh-custom/"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
-    antibodyReload
-)
-
-disabledPlugins=(
-    aliases
-    gitCustom
-    zsh-autosuggestions
-    osx
-    colored-man-pages
-    emacs
-    cp
-    golang
-    iterm2
-    node
-    rsync
-    web-search
-    zsh_reload
-    colorize
-    bgnotify
-    dirhistory
-    zsh-navigation-tools
-    copyLastCmd
-    installApps
-    brew
-    brewHistory
-    brewCustom
-    npmInstallHistory
-    lsgrep
-    z
-    per-directory-history
-    meteor
-    gitfast
-    emoji
-    ediff
-    sudo
-    cask
-    man
-    sshRemoveLine
-    ssh
+    stow
     tmux
-    firstlaunch
-    docker
-    sshcustom
+   # vi-mode
 )
-#    xargs
 
-#        zsh-per-directory-history
 
-#source ~/.oh-my-zsh/plugins/per-directory-history/per-directory-history.zsh
-
-# Antibody
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -141,17 +93,14 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='emacs'
+else
+  export EDITOR='emacs'
+fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+export ARCHFLAGS="-arch x86_64"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -162,29 +111,55 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export HOMEBREW_INSTALL_BADGE="☕️ 🐸"
+
+######### JS Added below this line ###########
+
+## Prevent duplicates in path
+#typeset -U path
+
+# Joshua's Scripts
+path+=("$HOME/local/bin")
+path+=("$HOME/bin")
+path+=("$PATH:$HOME/dev/Scripts")
+
+path+=("/usr/local/opt/python/libexec/bin")
+path+=("/usr/local/sbin")
+path+=("$(brew --prefix)/lib/pythonX.Y/site-packages")
 
 
-# Hooks for each command
-#PROMPT_COMMAND="echo hello;"
-#prmptcmd() { eval "$PROMPT_COMMAND" }
-#precmd_functions=(prmptcmd)
-
-source "$HOME/.tokens"
+# Doom
+path+=("$HOME/.emacs.d/bin")
 
 
-# monou from homebrew
-#To use the assemblies from other formulae you need to set:
-export MONO_GAC_PREFIX="/usr/local"
-# Enable modules
-
-source /usr/local/opt/modules/init/zsh
-
+# Powerlevel9k theme
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+#POWERLEVEL9K_VCS_GIT_HOOKS=
 
 
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-# These three lines are pyenv
-# https://github.com/pyenv/pyenv-installer
+DOTFILES="$HOME/.dotfiles"
 
+######### JS Add above this line ###########
+######### DO not add below this line #######
+
+# Enable Antibody package management
+source ~/.zsh_plugins.sh
+
+# Antibody Instructions
+# Static loading
+# This is the faster alternative. Basically, you’ll run antibody only when you change your plugins, and then you can just load the “static” plugins file.
+
+# Note that in this case, we should not put antibody init on our ~/.zshrc. If you did that already, remove it from your ~/.zshrc and start a fresh terminal session.
+
+# Assuming the same ~/.zsh_plugins.txt as before, we can run:
+
+# antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh
+# At any time to update our ~/.zsh_plugins.sh file. Now, we just need to source that file on ~/.zshrc:
+
+# # ~/.zshrc
+# source ~/.zsh_plugins.sh
+# This needs to happen at the end of your file
+# And that’s it!
+
+# Do not add below this, search for last statement
