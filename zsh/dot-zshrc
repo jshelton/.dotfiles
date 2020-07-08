@@ -228,7 +228,7 @@ source /usr/local/opt/modules/init/zsh
 
 ### Antibody
 # Enable Antibody package management
-# source ~/.zsh_plugins.sh
+source "$ZSH_CUSTOM"/antibody/zsh_plugins.sh
 
 # Antibody Instructions
 # Static loading
