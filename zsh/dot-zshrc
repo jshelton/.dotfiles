@@ -168,10 +168,19 @@ path+=("$HOME/local/bin")
 path+=("$HOME/bin")
 path+=("$PATH:$HOME/dev/Scripts")
 
-path+=("/usr/local/opt/python/libexec/bin")
-path+=("/usr/local/sbin")
-path+=("$(brew --prefix)/lib/pythonX.Y/site-packages")
+osversion=$(uname -r)
+isMac=true
 
+# If this is ish then skip the following
+if [[ ${osversion: -3} = ish ]]; then
+    isMac=false
+fi
+    
+if [[ "$isMac" = true ]]; then  
+    path+=("/usr/local/opt/python/libexec/bin")
+    path+=("/usr/local/sbin")
+    path+=("$(brew --prefix)/lib/pythonX.Y/site-packages")
+fi
 
 # Doom
 path+=("$HOME/.emacs.d/bin")
@@ -207,8 +216,9 @@ DOTFILES="$HOME/.dotfiles"
 
 
 # Homebrew
-export HOMEBREW_INSTALL_BADGE="☕️ 🐸"
-
+if [[ "$isMac" = true ]]; then
+    export HOMEBREW_INSTALL_BADGE="☕️ 🐸"
+fi
 
 ### End Environmental Variables
 
@@ -216,19 +226,29 @@ export HOMEBREW_INSTALL_BADGE="☕️ 🐸"
 ### mono
 #  from homebrew
 # To use the assemblies from other formulae you need to set:
-export MONO_GAC_PREFIX="/usr/local"
+if [[ "$isMac" = true ]]; then
+    export MONO_GAC_PREFIX="/usr/local"
+fi
 ### #nd mono
 
 ### Enable modules
-source /usr/local/opt/modules/init/zsh
-
+if [[ "$isMac" = true ]]; then
+    source /usr/local/opt/modules/init/zsh
+fi
 
 ######### JS Add above this line ###########
 ######### DO not add below this line #######
 
 ### Antibody
 # Enable Antibody package management
-source "$ZSH_CUSTOM"/antibody/zsh_plugins.sh
+antibody_src="$ZSH_CUSTOM"/antibody/zsh_plugins.sh
+
+if [[ -f "$antibody_src" ]]; then
+    source "$antibody_src"
+else
+    echo "antibody source not found. Rebuilding..."
+    which antibody && antibody bundle < ~/.oh-my-zsh-custom/antibody/zsh_plugins.txt > ~/.oh-my-zsh-custom/antibody/zsh_plugins.sh 
+fi
 
 # Antibody Instructions
 # Static loading
