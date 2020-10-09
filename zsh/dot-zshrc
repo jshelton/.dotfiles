@@ -226,6 +226,10 @@ source /usr/local/opt/modules/init/zsh
 ######### JS Add above this line ###########
 ######### DO not add below this line #######
 
+### Use Fuzy command search
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
 ### Antibody
 # Enable Antibody package management
 source "$ZSH_CUSTOM"/antibody/zsh_plugins.sh
@@ -262,3 +266,5 @@ source $ZSH_ANTIBODY_SH
 
 
 # Do not add below this, search for last statement
+
+
