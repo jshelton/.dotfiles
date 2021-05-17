@@ -68,7 +68,7 @@ ZSH_THEME="robbyrussell"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
-ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
+ZSH_CUSTOM="$HOME/src/github.com/jshelton/.oh-my-zsh-custom/"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -79,6 +79,8 @@ plugins=(
     git
     stow
     tmux
+    antibodyReload
+    stow
    # vi-mode
 )
 
@@ -229,29 +231,34 @@ fi
 if [[ "$isMac" = true ]]; then
     export MONO_GAC_PREFIX="/usr/local"
 fi
-### #nd mono
+### end mono
 
 ### Enable modules
-if [[ "$isMac" = true ]]; then
-    source /usr/local/opt/modules/init/zsh
-fi
+#if [[ "$isMac" = true ]]; then
+#    source /usr/local/opt/modules/init/zsh
+#fi
 
-######### JS Add above this line ###########
-######### DO not add below this line #######
 
 ### Use Fuzy command search
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+######### JS Add above this line ###########
+######### DO not add below this line (Antibody) #######
+
 
 ### Antibody
 # Enable Antibody package management
-antibody_src="$ZSH_CUSTOM"/antibody/zsh_plugins.sh
 
-if [[ -f "$antibody_src" ]]; then
-    source "$antibody_src"
+ZSH_ANTIBODY_CUSTOM_TXT="$ZSH_CUSTOM/antibody/zsh_plugins.txt"
+ZSH_ANTIBODY_CUSTOM_SRC="$ZSH_CUSTOM/antibody/zsh_plugins.sh"
+
+#
+if [[ -f  "$ZSH_ANTIBODY_CUSTOM_SRC" ]]; then
+    source "$ZSH_ANTIBODY_CUSTOM_SRC"
 else
     echo "antibody source not found. Rebuilding..."
-    which antibody && antibody bundle < ~/.oh-my-zsh-custom/antibody/zsh_plugins.txt > ~/.oh-my-zsh-custom/antibody/zsh_plugins.sh 
+    which antibody && [ -e "$ZSH_ANTIBODY_CUSTOM_TXT" ] && antibody bundle < "$ZSH_ANTIBODY_CUSTOM_TXT" > "$ZSH_ANTIBODY_CUSTOM_SRC"
+    source "$ZSH_ANTIBODY_CUSTOM_SRC"
 fi
 
 # Antibody Instructions
@@ -276,13 +283,8 @@ fi
 
 # After updating .zsh_plugins.txt do the following to save and refresh shell
 # antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh && source ~/.zsh_plugins.sh && src
-# See antibodyReload plugin (JS)
 
-ZSH_ANTIBODY_TXT="$HOME/.oh-my-zsh-custom/antibody/zsh_plugins.txt"
-ZSH_ANTIBODY_SH="$HOME/.oh-my-zsh-custom/antibody/zsh_plugins.sh"
-
-source $ZSH_ANTIBODY_SH
-### End Antibody
+## End Antibody
 
 
 # Do not add below this, search for last statement
