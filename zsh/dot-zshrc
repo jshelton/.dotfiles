@@ -208,7 +208,7 @@ fi
 ### Environmental Variables
 
 # Dot Files
-DOTFILES="$HOME/.dotfiles"
+DOTFILES="$HOME/src/jshelton/dotfiles"
 
 # Powerlevel9k theme
 # POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
