@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 LOG_FILE=~/Desktop/upddateDotfiles.log
 DOTFILES=$HOME/src/github.com/jshelton/dotfiles
+HOME_DIR=$HOME
 
 declare -a origList=(
     gitignore_global
@@ -52,12 +53,12 @@ do
 	destFile=".${sourceFile#dot-}"
 	echo "	${destFile}"
 
-	if [[ -d "$HOME/$destFile" ]] ; then
-	    rm -rf "$HOME/$destFile";
-	elif [[ -f "$HOME/$destFile" ]];
+	if [[ -d "$HOME_DIR/$destFile" ]] ; then
+	    rm -rf "$HOME_DIR/$destFile";
+	elif [[ -f "$HOME_DIR/$destFile" ]];
 	then
-	    rm "$HOME/$destFile";
+	    rm "$HOME_DIR/$destFile";
 	fi
-	ln -s "$sourcePath" "$HOME/$destFile" ;
+	ln -s "$sourcePath" "$HOME_DIR/$destFile" ;
     done
 done
