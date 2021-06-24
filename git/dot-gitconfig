@@ -1,0 +1,7 @@
+[user]
+	name = Joshua S
+	email = qikstart@gmail.com
+[core]
+	excludesfile = /Users/joshua/.gitignore_global
+[pull]
+	rebase = false
